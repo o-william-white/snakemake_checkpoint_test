@@ -1,0 +1,12 @@
+# load rules
+include: "rules/common.smk"
+include: "rules/fastp.smk"
+include: "rules/getorganelle.smk"
+include: "rules/assembled_sequence.smk"
+include: "rules/seqkit.smk"
+
+
+# one rule to rule them all :)
+rule all:
+    input:
+        expand("results/seqkit/{sample}.ok", sample=sample_data["ID"].tolist())
