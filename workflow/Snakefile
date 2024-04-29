@@ -4,10 +4,15 @@ include: "rules/fastp.smk"
 include: "rules/getorganelle.smk"
 include: "rules/assembled_sequence.smk"
 include: "rules/seqkit.smk"
-include: "rules/aggregate.smk"
 
+def get_assembled_samples(wildcards):
+    ck_output = checkpoints.assembled_sequence.get(**wildcards).output[0]
+    return expand(
+        rules.seqkit.output,
+        sample=glob_wildcards(os.path.join(ck_output, "{sample}.fasta")).sample,
+    )
 
 # one rule to rule them all :)
 rule all:
     input:
-        "results/report.txt"
+        get_assembled_samples
