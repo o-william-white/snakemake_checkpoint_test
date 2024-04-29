@@ -1,12 +1,12 @@
 rule getorganelle:
     input:
-        fwd="results/fastp/{sample}_R1.fastq",
-        rev="results/fastp/{sample}_R2.fastq",
+        fwd=rules.fastp_pe.output.trimmed[0],
+        rev=rules.fastp_pe.output.trimmed[1],
     params:
         seed=get_seed,
         gene=get_gene,
     output:
-        ok="results/getorganelle/{sample}/getorganelle.ok",
+        directory("results/getorganelle/{sample}/"),
     log:
         "logs/getorganelle/{sample}.log",
     conda:
@@ -24,5 +24,4 @@ rule getorganelle:
             --max-reads inf \
             -R 20 \
             --overwrite &> {log}
-            touch {output.ok}
         """

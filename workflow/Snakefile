@@ -4,9 +4,10 @@ include: "rules/fastp.smk"
 include: "rules/getorganelle.smk"
 include: "rules/assembled_sequence.smk"
 include: "rules/seqkit.smk"
+include: "rules/aggregate.smk"
 
 
 # one rule to rule them all :)
 rule all:
     input:
-        expand("results/seqkit/{sample}.ok", sample=sample_data["ID"].tolist())
+        "results/report.txt"
